@@ -14,7 +14,7 @@ namespace WebAddressbookTests
         {
             ContactData newcontact = new ContactData("NonHomer", "NonSimpson");
 
-            applicationManager.PubContactHelper.Modify(1, newcontact);
+            applicationManager.PubContactHelper.Modify(newcontact);
         }
     }
 }

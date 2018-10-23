@@ -24,7 +24,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int index, ContactData newcontact)
+        public ContactHelper Modify(ContactData newcontact)
         {
             manager.PubNavigationHelper.GoToContactsPage();
             InitContactModify();
