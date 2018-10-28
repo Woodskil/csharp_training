@@ -27,28 +27,38 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData newcontact)
         {
             manager.PubNavigationHelper.GoToContactsPage();
+
+            if (!ThereIsContact())
+            {
+                Create(new ContactData("test_first_name", "test_middlename"));
+                manager.PubNavigationHelper.GoToContactsPage();
+            }
+
             InitContactModify();
             FillContactForm(newcontact);
             SubmitContactUpdating();
             return this;
         }
 
-        public ContactHelper Remove(int index)
+        public ContactHelper Remove()
         {
             manager.PubNavigationHelper.GoToContactsPage();
-            SelectContact(index);
+
+            if (!ThereIsContact())
+            {
+                Create(new ContactData("test_first_name", "test_middlename"));
+                manager.PubNavigationHelper.GoToContactsPage();
+            }
+
+            SelectContact();
             RemoveContact();
             return this;
         }
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("middlename")).Click();
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.Middlename);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("middlename"), contact.Middlename);
             return this;
         }
 
@@ -65,9 +75,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact(int index)
+        public ContactHelper SelectContact()
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])")).Click();
             return this;
         }
 
@@ -87,6 +97,15 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
+        }
+
+        public bool ThereIsContact()
+        {
+            if (! (IsElementPresent(By.XPath("//input[@name='searchstring']")) && IsElementPresent(By.XPath("//input[@value='Send e-Mail']"))) )
+            {
+                manager.PubNavigationHelper.GoToContactsPage();
+            }
+            return IsElementPresent(By.Name("selected[]"));
         }
     }
 }

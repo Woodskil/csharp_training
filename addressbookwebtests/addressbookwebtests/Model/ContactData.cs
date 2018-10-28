@@ -11,8 +11,8 @@ namespace WebAddressbookTests
         private string firstname;
         private string middlename;
 
-        private string lastname = "";
-        private string nickname = "";
+        private string lastname = null;
+        private string nickname = null;
         //private string title = "";
         //private string company;
         //private string address;

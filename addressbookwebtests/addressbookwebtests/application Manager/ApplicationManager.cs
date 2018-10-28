@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -19,7 +20,9 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> applicationManager = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook/";
@@ -28,6 +31,17 @@ namespace WebAddressbookTests
             navigationHelper = new NavigationHelper(this);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! applicationManager.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.PubNavigationHelper.OpenHomePage();
+                applicationManager.Value = newInstance;
+            }
+            return applicationManager.Value;
         }
 
         public IWebDriver Driver
@@ -43,18 +57,6 @@ namespace WebAddressbookTests
             get
             {
                 return baseURL;
-            }
-        }
-
-        public void Stop()
-        {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
             }
         }
 
@@ -87,6 +89,18 @@ namespace WebAddressbookTests
             get
             {
                 return contactHelper;
+            }
+        }
+
+        ~ApplicationManager()
+        {
+            try
+            {   
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                // Ignore errors if unable to close the browser
             }
         }
     }
