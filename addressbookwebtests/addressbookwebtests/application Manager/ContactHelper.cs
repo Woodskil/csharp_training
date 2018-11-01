@@ -27,13 +27,6 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData newcontact)
         {
             manager.PubNavigationHelper.GoToContactsPage();
-
-            if (!ThereIsContact())
-            {
-                Create(new ContactData("test_first_name", "test_middlename"));
-                manager.PubNavigationHelper.GoToContactsPage();
-            }
-
             InitContactModify();
             FillContactForm(newcontact);
             SubmitContactUpdating();
@@ -43,13 +36,6 @@ namespace WebAddressbookTests
         public ContactHelper Remove()
         {
             manager.PubNavigationHelper.GoToContactsPage();
-
-            if (!ThereIsContact())
-            {
-                Create(new ContactData("test_first_name", "test_middlename"));
-                manager.PubNavigationHelper.GoToContactsPage();
-            }
-
             SelectContact();
             RemoveContact();
             return this;

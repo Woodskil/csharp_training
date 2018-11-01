@@ -12,11 +12,18 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
+            int GroupNumber = 1;
+
+            while (!applicationManager.PubGroupHelper.ThereIsGroup(GroupNumber))
+            {
+                applicationManager.PubGroupHelper.Create(new GroupData("test_group"));
+            }
+
             GroupData newData = new GroupData("mewgroup");
             newData.Header = "newheader";
             newData.Footer = "newfooter";
 
-            applicationManager.PubGroupHelper.Modify(1, newData);
+            applicationManager.PubGroupHelper.Modify(GroupNumber, newData);
         }
     }
 }

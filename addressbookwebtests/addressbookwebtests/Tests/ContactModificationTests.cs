@@ -12,6 +12,11 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
+            if (!applicationManager.PubContactHelper.ThereIsContact())
+            {
+                applicationManager.PubContactHelper.Create(new ContactData("test_first_name", "test_middlename"));
+            }
+
             ContactData newcontact = new ContactData("NonHomer", "NonSimpson");
 
             applicationManager.PubContactHelper.Modify(newcontact);

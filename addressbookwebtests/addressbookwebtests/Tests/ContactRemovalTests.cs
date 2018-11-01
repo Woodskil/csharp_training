@@ -12,6 +12,11 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
+            if (!applicationManager.PubContactHelper.ThereIsContact())
+            {
+                applicationManager.PubContactHelper.Create(new ContactData("test_first_name", "test_middlename"));
+            }
+
             applicationManager.PubContactHelper.Remove();
         }
     }

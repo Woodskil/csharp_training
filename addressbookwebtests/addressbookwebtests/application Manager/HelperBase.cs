@@ -43,5 +43,10 @@ namespace WebAddressbookTests
                 return false;
             }
         }
+
+        public void Wait (int milliseconds)
+        {
+            System.Threading.Thread.Sleep(milliseconds);
+        }
     }
 }

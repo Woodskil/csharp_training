@@ -12,7 +12,14 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            applicationManager.PubGroupHelper.Remove(1);
+            int GroupNumber = 1;
+
+            while (!applicationManager.PubGroupHelper.ThereIsGroup(GroupNumber))
+            {
+                applicationManager.PubGroupHelper.Create(new GroupData("test_group"));
+            }
+
+            applicationManager.PubGroupHelper.Remove(GroupNumber);
         }
     }
 }

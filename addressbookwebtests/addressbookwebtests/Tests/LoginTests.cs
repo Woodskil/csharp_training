@@ -16,7 +16,7 @@ namespace WebAddressbookTests
 
             AccountData account = new AccountData("admin", "secret");
             applicationManager.PubLoginHelper.Login(account);
-
+                
             Assert.IsTrue(applicationManager.PubLoginHelper.IsLoggedIn(account));
         }
 
@@ -24,6 +24,7 @@ namespace WebAddressbookTests
         public void LoginWithInvalidCredentials()
         {
             applicationManager.PubLoginHelper.Logout();
+            applicationManager.PubLoginHelper.Wait(100);
 
             AccountData account = new AccountData("admin", "1234");
             applicationManager.PubLoginHelper.Login(account);

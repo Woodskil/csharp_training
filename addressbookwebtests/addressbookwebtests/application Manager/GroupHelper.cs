@@ -29,13 +29,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int p, GroupData newData)
         {
             manager.PubNavigationHelper.GoToGroupsPage();
-
-            while (!ThereIsGroup(p))
-            {
-                Create(new GroupData("test_group"));
-                manager.PubNavigationHelper.GoToGroupsPage();
-            }
-
             SelectGroup(p);
             InitGroupModification();
             FillGroupForm(newData);
@@ -47,13 +40,6 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int p)
         {
             manager.PubNavigationHelper.GoToGroupsPage();
-
-            while (!ThereIsGroup(p))
-            {
-                Create(new GroupData("test_group"));
-                manager.PubNavigationHelper.GoToGroupsPage();
-            }
-
             SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
