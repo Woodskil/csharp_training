@@ -24,6 +24,26 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+
+            List<ContactData> contacts = new List<ContactData>();
+
+            if (!IsElementPresent(By.CssSelector("tr[name=entry]")))
+            {
+                return contacts;
+            }
+
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
+            foreach (IWebElement element in elements)
+            {
+                var cells = element.FindElements(By.CssSelector("td"));
+                contacts.Add(new ContactData(cells[1].Text, cells[2].Text));
+            }
+            return contacts;
+        }
+
         public ContactHelper Modify(ContactData newcontact)
         {
             manager.PubNavigationHelper.GoToContactsPage();
@@ -37,6 +57,7 @@ namespace WebAddressbookTests
         {
             manager.PubNavigationHelper.GoToContactsPage();
             SelectContact();
+            Wait(100);
             RemoveContact();
             return this;
         }
@@ -44,7 +65,7 @@ namespace WebAddressbookTests
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Firstname);
-            Type(By.Name("middlename"), contact.Middlename);
+            Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
 
