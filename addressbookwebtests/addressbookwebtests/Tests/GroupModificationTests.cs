@@ -14,13 +14,13 @@ namespace WebAddressbookTests
         public void GroupModificationTest()
         {
             int GroupNumber = 1;
-            List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
 
-            while (oldGroups.Count <= GroupNumber)
+            while (!applicationManager.PubGroupHelper.ThereIsGroup(GroupNumber))
             {
                 applicationManager.PubGroupHelper.Create(new GroupData("test_group"));
-                oldGroups.Add(new GroupData("test_group"));
             }
+
+            List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
 
             GroupData newData = new GroupData("mewgroup");
             newData.Header = "newheader";

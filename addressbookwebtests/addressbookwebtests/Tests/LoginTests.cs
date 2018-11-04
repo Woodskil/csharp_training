@@ -24,7 +24,7 @@ namespace WebAddressbookTests
         public void LoginWithInvalidCredentials()
         {
             applicationManager.PubLoginHelper.Logout();
-            applicationManager.PubLoginHelper.Wait(100);
+            applicationManager.PubLoginHelper.Wait(200);
 
             AccountData account = new AccountData("admin", "1234");
             applicationManager.PubLoginHelper.Login(account);

@@ -13,13 +13,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
-            
-            if (oldContacts.Count == 0)
+            if (!applicationManager.PubContactHelper.ThereIsContact())
             {
                 applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
-                oldContacts = applicationManager.PubContactHelper.GetContactList();
             }
+
+            List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
 
             ContactData newcontact = new ContactData("NonSimpson", "NonHomer");
 

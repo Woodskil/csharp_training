@@ -13,18 +13,16 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
-
-            if (oldContacts.Count == 0)
+            if (!applicationManager.PubContactHelper.ThereIsContact())
             {
                 applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
-                oldContacts = applicationManager.PubContactHelper.GetContactList();
-
             }
 
-            applicationManager.PubContactHelper.Remove();
-            applicationManager.PubContactHelper.Wait(100);
+            List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
 
+            applicationManager.PubContactHelper.Remove();
+
+            applicationManager.PubContactHelper.Wait(200);
             List<ContactData> newContacts = applicationManager.PubContactHelper.GetContactList();
 
             oldContacts.RemoveAt(0);

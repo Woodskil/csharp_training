@@ -14,13 +14,13 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             int GroupNumber = 1;
-            List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
 
-            while (oldGroups.Count <= GroupNumber)
+            while (!applicationManager.PubGroupHelper.ThereIsGroup(GroupNumber))
             {
                 applicationManager.PubGroupHelper.Create(new GroupData("test_group"));
-                oldGroups.Add(new GroupData("test_group"));
             }
+
+            List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
 
             applicationManager.PubGroupHelper.Remove(GroupNumber);
             applicationManager.PubGroupHelper.Wait(100);
