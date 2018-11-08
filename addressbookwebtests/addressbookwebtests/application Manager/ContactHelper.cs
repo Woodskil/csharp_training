@@ -30,11 +30,6 @@ namespace WebAddressbookTests
 
             List<ContactData> contacts = new List<ContactData>();
 
-            if (!IsElementPresent(By.CssSelector("tr[name=entry]")))
-            {
-                return contacts;
-            }
-
             ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
             foreach (IWebElement element in elements)
             {
