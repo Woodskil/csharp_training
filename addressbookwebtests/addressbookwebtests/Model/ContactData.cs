@@ -8,11 +8,11 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string lastname;
-        private string firstname;
+        public string Lastname { get; set; }
+        public string Firstname { get; set; }
 
-        private string middlename = null;
-        private string nickname = null;
+        public string Middlename { get; set; }
+        public string Nickname { get; set; }
         //private string title = "";
         //private string company;
         //private string address;
@@ -37,8 +37,10 @@ namespace WebAddressbookTests
 
         public ContactData(string lastname, string firstname)
         {
-            this.lastname = lastname;
-            this.firstname = firstname;
+            Lastname = lastname;
+            Firstname = firstname;
+            Middlename = null;
+            Nickname = null;
         }
 
         public bool Equals(ContactData other)
@@ -75,58 +77,6 @@ namespace WebAddressbookTests
         public override string ToString()
         {
             return ("contact = " + this.Lastname + " " + this.Firstname);
-        }
-
-        public string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
-
-            set
-            {
-                firstname = value;
-            }
-        }
-
-        public string Middlename
-        {
-            get
-            {
-                return middlename;
-            }
-
-            set
-            {
-                middlename = value;
-            }
-        }
-
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-
-            set
-            {
-                lastname = value;
-            }
-        }
-
-        public string Nickname
-        {
-            get
-            {
-                return nickname;
-            }
-
-            set
-            {
-                nickname = value;
-            }
         }
     }
 }

@@ -24,19 +24,22 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-            manager.PubNavigationHelper.GoToContactsPage();
-
-            List<ContactData> contacts = new List<ContactData>();
-
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                var cells = element.FindElements(By.CssSelector("td"));
-                contacts.Add(new ContactData(cells[1].Text, cells[2].Text));
+                contactCache = new List<ContactData>();
+                manager.PubNavigationHelper.GoToContactsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
+                foreach (IWebElement element in elements)
+                {
+                    var cells = element.FindElements(By.CssSelector("td"));
+                    contactCache.Add(new ContactData(cells[1].Text, cells[2].Text));
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
 
         public ContactHelper Modify(ContactData newcontact)
@@ -74,6 +77,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -86,12 +90,14 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper SubmitContactUpdating()
         {
             driver.FindElement(By.XPath("//input[@name='update']")).Click();
+            contactCache = null;
             return this;
         }
 

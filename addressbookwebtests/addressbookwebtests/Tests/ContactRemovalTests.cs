@@ -22,7 +22,7 @@ namespace WebAddressbookTests
 
             applicationManager.PubContactHelper.Remove();
 
-            applicationManager.PubContactHelper.Wait(200);
+            applicationManager.PubContactHelper.Wait(500);
             List<ContactData> newContacts = applicationManager.PubContactHelper.GetContactList();
 
             oldContacts.RemoveAt(0);

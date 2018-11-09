@@ -21,6 +21,7 @@ namespace WebAddressbookTests
             }
 
             List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
+            GroupData ModifiersGroup = oldGroups[GroupNumber - 1];
 
             GroupData newData = new GroupData("mewgroup");
             newData.Header = "newheader";
@@ -35,6 +36,14 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == ModifiersGroup.Id)
+                {
+                    Assert.AreEqual(group.Name, newData.Name);
+                }
+            }
         }
     }
 }

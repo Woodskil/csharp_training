@@ -21,6 +21,7 @@ namespace WebAddressbookTests
             }
 
             List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();
+            GroupData RemovedGroup = oldGroups[GroupNumber - 1];
 
             applicationManager.PubGroupHelper.Remove(GroupNumber);
             applicationManager.PubGroupHelper.Wait(100);
@@ -31,6 +32,11 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, RemovedGroup.Id);
+            }
         }
     }
 }
