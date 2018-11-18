@@ -15,10 +15,7 @@ namespace WebAddressbookTests
         {
             int NumberOfContactWithInformation = 0;
 
-            if (!applicationManager.PubContactHelper.ThereIsContact())
-            {
-                applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
-            }
+            applicationManager.PubContactHelper.ChackOrCreateContact(NumberOfContactWithInformation);
 
             ContactData fromTable = applicationManager.PubContactHelper.GetContactInformationFromTable(NumberOfContactWithInformation);
             ContactData fromEdit = applicationManager.PubContactHelper.GetContactInformationFromEditForm(NumberOfContactWithInformation);
@@ -34,10 +31,7 @@ namespace WebAddressbookTests
         {
             int NumberOfContactWithInformation = 0;
 
-            if (!applicationManager.PubContactHelper.ThereIsContact())
-            {
-                applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
-            }
+            applicationManager.PubContactHelper.ChackOrCreateContact(NumberOfContactWithInformation);
 
             ContactData fromEdit = applicationManager.PubContactHelper.GetContactInformationFromEditForm(NumberOfContactWithInformation);
             string stringFromEdit = fromEdit.GetInformationFromViewForm();

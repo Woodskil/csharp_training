@@ -81,10 +81,19 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Remove()
+        public ContactHelper Modify(int index, ContactData newcontact)
         {
             manager.PubNavigationHelper.GoToContactsPage();
-            SelectContact();
+            InitContactModify(index);
+            FillContactForm(newcontact);
+            SubmitContactUpdating();
+            return this;
+        }
+
+        public ContactHelper Remove( int index = 0)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            SelectContact(index);
             Wait(100);
             RemoveContact();
             return this;
@@ -135,6 +144,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index].FindElement(By.XPath("(//input[@name='selected[]'])")).Click();
+            return this;
+        }
+
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
@@ -151,19 +166,8 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModify(int index = 0)
         {
-            driver.FindElements(By.Name("entry"))[index]
-                .FindElements(By.TagName("td"))[7]
-                .FindElement(By.TagName("a")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
             return this;
-        }
-
-        public bool ThereIsContact()
-        {
-            if (! (IsElementPresent(By.XPath("//input[@name='searchstring']")) && IsElementPresent(By.XPath("//input[@value='Send e-Mail']"))) )
-            {
-                manager.PubNavigationHelper.GoToContactsPage();
-            }
-            return IsElementPresent(By.Name("entry"));
         }
 
         public int GetNumberOfSearchResult()
@@ -172,6 +176,28 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.TagName("label")).Text;
             Match reg_march = new Regex(@"\d+").Match(text);
             return Int32.Parse(reg_march.Value); 
+        }
+
+        public bool ThereIsContact()
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            return IsElementPresent(By.Name("entry"));
+        }
+
+        public bool ThereIsContact(int index)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
+            return elements.Count > index;
+        }
+
+        public ContactHelper ChackOrCreateContact(int index = 0)
+        {
+            while (!ThereIsContact(index))
+            {
+                Create(new ContactData("test_last_name", "test_first_name"));
+            }
+            return this;
         }
     }
 }

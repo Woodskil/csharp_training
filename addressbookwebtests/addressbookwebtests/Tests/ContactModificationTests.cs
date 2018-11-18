@@ -13,21 +13,20 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            if (!applicationManager.PubContactHelper.ThereIsContact())
-            {
-                applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
-            }
+            int NumberOfContact = 0;
+
+            applicationManager.PubContactHelper.ChackOrCreateContact(NumberOfContact);
 
             List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
 
             ContactData newcontact = new ContactData("NonSimpson", "NonHomer");
 
-            applicationManager.PubContactHelper.Modify(newcontact);
+            applicationManager.PubContactHelper.Modify(NumberOfContact, newcontact);
             applicationManager.PubContactHelper.Wait(100);
 
             List<ContactData> newContacts = applicationManager.PubContactHelper.GetContactList();
 
-            oldContacts[0] = newcontact;
+            oldContacts[NumberOfContact] = newcontact;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
