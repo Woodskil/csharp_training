@@ -49,5 +49,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
+
+        public NavigationHelper GoToViewContactsPage(int index)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            driver.FindElements(By.Name("entry"))[index].FindElement(By.XPath("(//img[@alt='Details'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
     }
 }

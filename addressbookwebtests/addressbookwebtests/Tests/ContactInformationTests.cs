@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     public class ContactInformationTests : AuthTestBase
     {
         [Test]
-        public void ContactInformationTest()
+        public void ContactInformationTestFromHomeAndEdit()
         {
             int NumberOfContactWithInformation = 0;
 
@@ -28,5 +28,23 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable.AllEmails, fromEdit.AllEmails);
             Assert.AreEqual(fromTable.AllPhones, fromEdit.AllPhones);
         }
+
+        [Test]
+        public void ContactInformationTestFromViewAndEdit()
+        {
+            int NumberOfContactWithInformation = 0;
+
+            if (!applicationManager.PubContactHelper.ThereIsContact())
+            {
+                applicationManager.PubContactHelper.Create(new ContactData("test_last_name", "test_first_name"));
+            }
+
+            ContactData fromEdit = applicationManager.PubContactHelper.GetContactInformationFromEditForm(NumberOfContactWithInformation);
+            string stringFromEdit = fromEdit.GetInformationFromViewForm();
+            string stringFromView = applicationManager.PubContactHelper.GetContactInformationFromViewForm(NumberOfContactWithInformation);
+
+            Assert.AreEqual(stringFromEdit, stringFromView);
+        }
+
     }
 }

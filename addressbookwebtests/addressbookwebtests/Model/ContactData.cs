@@ -76,7 +76,7 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
-
+        
         //private string title = "";
         //private string company;
         //private string fax;
@@ -158,6 +158,65 @@ namespace WebAddressbookTests
         public override string ToString()
         {
             return ("contact = " + this.Lastname + " " + this.Firstname);
+        }
+
+        private string GetInfoString(string str1, string str2, string str3, string str4 = null, string str5 = null)
+        {
+            string doneStr = null;
+
+            if (str1 != null && str1 != "") { doneStr += str1 + "\r\n"; }
+            if (str2 != null && str2 != "") { doneStr += str2 + "\r\n"; }
+            if (str3 != null && str3 != "") { doneStr += str3 + "\r\n"; }
+            if (str4 != null && str4 != "") { doneStr += str4 + "\r\n"; }
+            if (str5 != null && str5 != "") { doneStr += str4 + "\r\n"; }
+            if (doneStr != null && doneStr != "") { doneStr += "\r\n"; }
+
+            return doneStr;
+        }
+
+        public string GetInformationFromViewForm()
+        {
+            string infoString = "";
+            string fullname = null;
+            string plusHomePhone = null;
+            string plusMobilePhone = null;
+            string plusWorkPhone = null;
+
+            if (this.Firstname != null && this.Firstname != "")
+            {
+                fullname += this.Firstname;
+            }
+            if (this.Middlename != null && this.Middlename != "")
+            {
+                if (fullname != null && fullname != "")
+                {
+                    fullname += " ";
+                }
+                fullname += this.Middlename;
+            }
+            if (this.Lastname != null && this.Lastname != "")
+            {
+                if (fullname != null && fullname != "")
+                {
+                    fullname += " ";
+                }
+                fullname += this.Lastname;
+            }
+
+            if (this.HomePhone != null && this.HomePhone != "") { plusHomePhone = "H: " + this.HomePhone; }
+            if (this.MobilePhone != null && this.MobilePhone != "") { plusMobilePhone = "M: " + this.MobilePhone; }
+            if (this.WorkPhone != null && this.WorkPhone != "") { plusWorkPhone = "W: " + this.WorkPhone; }
+
+            infoString += GetInfoString(fullname, this.Nickname, this.Address);
+            infoString += GetInfoString(plusHomePhone, plusMobilePhone, plusWorkPhone);
+            infoString += GetInfoString(this.Email, this.Email2, this.Email3);
+
+            while (infoString.Substring(infoString.Length - 2) == "\r\n")
+            {
+                infoString = infoString.Substring(0, infoString.Length - 2);
+            }
+
+            return infoString;
         }
     }
 }

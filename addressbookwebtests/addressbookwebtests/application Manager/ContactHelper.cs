@@ -40,6 +40,12 @@ namespace WebAddressbookTests
             return ReadContactFromEditForm();
         }
 
+        public string GetContactInformationFromViewForm(int index)
+        {
+            manager.PubNavigationHelper.GoToViewContactsPage(index);
+            return driver.FindElement(By.Id("content")).Text;
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
