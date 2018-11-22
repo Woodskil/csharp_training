@@ -15,9 +15,16 @@ namespace WebAddressbookTests
 
         public GroupData(string name)
         {
-            Name = name;
-            Header = null;
-            Footer = null;
+            this.Name = name;
+            this.Header = null;
+            this.Footer = null;
+        }
+
+        public GroupData(string name, string header, string footer)
+        {
+            this.Name = name;
+            this.Header = header;
+            this.Footer = footer;
         }
 
         public bool Equals(GroupData other)
@@ -53,7 +60,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name=" + Name;
+            return "\nname=" + this.Name + "\nheader= " + this.Header + "\nfooter= " + this.Footer;
         }
     }
 }

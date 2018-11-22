@@ -211,9 +211,12 @@ namespace WebAddressbookTests
             infoString += GetInfoString(plusHomePhone, plusMobilePhone, plusWorkPhone);
             infoString += GetInfoString(this.Email, this.Email2, this.Email3);
 
-            while (infoString.Substring(infoString.Length - 2) == "\r\n")
+            if (infoString.Length > 1)
             {
-                infoString = infoString.Substring(0, infoString.Length - 2);
+                while (infoString.Substring(infoString.Length - 2) == "\r\n")
+                {
+                    infoString = infoString.Substring(0, infoString.Length - 2);
+                }
             }
 
             return infoString;
