@@ -3,7 +3,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAddressbookTests
 {
@@ -25,7 +29,32 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"Data Source\groups.csv");
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(',');
+                groups.Add(new GroupData(parts[0], parts[1], parts[2]));
+            }
+            return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            return (List<GroupData>) 
+                new XmlSerializer(typeof(List<GroupData>))
+                .Deserialize(new StreamReader(@"Data Source\groups.xml")); 
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"Data Source\groups.json"));
+        }
+
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = applicationManager.PubGroupHelper.GetGroupList();

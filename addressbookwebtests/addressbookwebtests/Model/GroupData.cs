@@ -13,6 +13,13 @@ namespace WebAddressbookTests
         public string Footer { get; set; }
         public string Id { get; set; }
 
+        public GroupData()
+        {
+            this.Name = null;
+            this.Header = null;
+            this.Footer = null;
+        }
+
         public GroupData(string name)
         {
             this.Name = name;

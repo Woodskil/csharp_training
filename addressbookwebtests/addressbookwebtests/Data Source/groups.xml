@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroupData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GroupData>
+    <Name>;(Aa08O!JA?G</Name>
+    <Header>]Z)O&gt;W_@O)1CPR%^1^!5N:]B=7\V`$'^;65]M=QM_ZM`0=AFI$9D&gt;1*C^H3(])AK"4(:=)1T.58TN^2`W5-\L</Header>
+    <Footer>A*-S`%*IQV9"^]6')@TF6([6W 642G]Fa?T_-K*+JFEB;L 6KO,N(&amp;.9</Footer>
+  </GroupData>
+  <GroupData>
+    <Name>W]_PW7*</Name>
+    <Header>T"?)8[?6I]QD8\*  JD&lt;/&gt;[0&lt;O7O,&lt;S/;IHJB-3UN8@*&gt;UY\S_P-TOK6(/NJDQ*-*B)P5A@T7ONY_QTHW&lt;^.MF&lt;M_1</Header>
+    <Footer>3@J1_.3 \L)G2?]W%!T88&lt;'T(T\AE&amp;=R#`-4N&gt;QJLQX]NVLPQP7L</Footer>
+  </GroupData>
+  <GroupData>
+    <Name />
+    <Header />
+    <Footer />
+  </GroupData>
+  <GroupData>
+    <Name>Normal_Group_Name</Name>
+    <Header>Normal_Group_Heater</Header>
+    <Footer>Normal_Group_Footer</Footer>
+  </GroupData>
+</ArrayOfGroupData>

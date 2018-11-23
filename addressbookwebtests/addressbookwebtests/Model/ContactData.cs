@@ -76,7 +76,7 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
-        
+
         //private string title = "";
         //private string company;
         //private string fax;
@@ -92,36 +92,14 @@ namespace WebAddressbookTests
         //private string phone2;
         //private string notes;
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string lastname, string firstname)
         {
             Lastname = lastname;
             Firstname = firstname;
-
-            Middlename = null;
-            Nickname = null;
-            Address = null;
-            HomePhone = null;
-            MobilePhone = null;
-            WorkPhone = null;
-            Email = null;
-            Email2 = null;
-            Email3 = null;
-        }
-
-        public ContactData()
-        {
-            Lastname = null;
-            Firstname = null;
-
-            Middlename = null;
-            Nickname = null;
-            Address = null;
-            HomePhone = null;
-            MobilePhone = null;
-            WorkPhone = null;
-            Email = null;
-            Email2 = null;
-            Email3 = null;
         }
 
         public bool Equals(ContactData other)
