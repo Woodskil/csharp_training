@@ -22,6 +22,9 @@ namespace WebAddressbookTests
         [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public GroupData()
         {
             this.Name = null;
@@ -83,25 +86,18 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from g in db.Groups select g).ToList();
+                return (from g in db.Groups.Where(x => x.Deprecated == "0000-00-00 00:00:00") select g).ToList();
             }
-
         }
 
-        public static List<GroupData> GetAllNameAndId()
+        public List<ContactData> GetContacts()
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                List<GroupData> groups = (from g in db.Groups select g).ToList();
-                foreach ( GroupData g in groups)
-                {
-                    g.Header = null;
-                    g.Footer = null;
-                }
-                return groups;
+                return (from c in db.Contacts
+                        from gcr in db.GCR.Where( p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
+                        select c).Distinct().ToList();
             }
-
         }
-
     }
 }

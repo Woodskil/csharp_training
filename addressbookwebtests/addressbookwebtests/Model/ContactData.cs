@@ -4,26 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
+        [Column(Name = "middlename")]
         public string Middlename { get; set; }
+        [Column(Name = "nickname")]
         public string Nickname { get; set; }
+        [Column(Name = "address")]
         public string Address { get; set; }
+        [Column(Name = "home")]
         public string HomePhone { get; set; }
+        [Column(Name = "mobile")]
         public string MobilePhone { get; set; }
+        [Column(Name = "work")]
         public string WorkPhone { get; set; }
+        [Column(Name = "email")]
         public string Email { get; set; }
+        [Column(Name = "email2")]
         public string Email2 { get; set; }
+        [Column(Name = "email3")]
         public string Email3 { get; set; }
 
         private string allPhones;
         private string allEmails;
+
+        [Column(Name ="deprecated")]
+        public string Deprecated { get; set; }
 
         public string AllPhones
         {
@@ -76,21 +94,6 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
-
-        //private string title = "";
-        //private string company;
-        //private string fax;
-        //private string homepage;
-        //private string bday;
-        //private string bmonth;
-        //private string byear;
-        //private string aday;
-        //private string amonth;
-        //private string ayear;
-        //private GroupData new_group;
-        //private string address2;
-        //private string phone2;
-        //private string notes;
 
         public ContactData()
         {
@@ -198,6 +201,15 @@ namespace WebAddressbookTests
             }
 
             return infoString;
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
+            }
+
         }
     }
 }
