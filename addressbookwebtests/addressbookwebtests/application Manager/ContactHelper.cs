@@ -78,7 +78,8 @@ namespace WebAddressbookTests
             InitContactCreation();
             FillContactForm(contact);
             SubmitContactCreation();
-            Wait(100);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
         }
 
@@ -106,6 +107,8 @@ namespace WebAddressbookTests
             InitContactModify();
             FillContactForm(newcontact);
             SubmitContactUpdating();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
         }
 
@@ -115,6 +118,19 @@ namespace WebAddressbookTests
             InitContactModify(index);
             FillContactForm(newcontact);
             SubmitContactUpdating();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData toBeChange, ContactData newcontact)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            InitContactModify(toBeChange.Id);
+            FillContactForm(newcontact);
+            SubmitContactUpdating();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
         }
 
@@ -124,6 +140,18 @@ namespace WebAddressbookTests
             SelectContact(index);
             Wait(100);
             RemoveContact();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
+        public ContactHelper Remove(ContactData toBeRemoved)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            SelectContact(toBeRemoved.Id);
+            RemoveContact();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
         }
 
@@ -201,6 +229,12 @@ namespace WebAddressbookTests
         public ContactHelper InitContactModify(int index = 0)
         {
             driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index + 1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModify(string id)
+        {
+            driver.FindElement(By.XPath("//a[contains(@href, 'edit.php?id=" + id + "')]")).Click();
             return this;
         }
 

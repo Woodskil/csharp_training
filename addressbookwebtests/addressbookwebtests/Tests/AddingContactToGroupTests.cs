@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class AddingContactToGroupTests : AuthTestBase
+    public class AddingContactToGroupTests : ContactTestBase
     {
         [Test]
         public void TestAddingContactToGroup()
@@ -21,7 +21,7 @@ namespace WebAddressbookTests
                 applicationManager.PubGroupHelper.Create(new GroupData("test_group"));
             }
 
-            GroupData group = GroupData.GetAll()[GroupNumber];
+            GroupData group = GroupData.GetAll()[GroupNumber-1];
             List<ContactData> oldList = group.GetContacts();
 
             List<ContactData> nonInGroupContacts = ContactData.GetAll().Except(oldList).ToList();

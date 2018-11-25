@@ -211,5 +211,15 @@ namespace WebAddressbookTests
             }
 
         }
+
+        public List<GroupData> GetGroups()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups
+                        from gcr in db.GCR.Where(p => p.GroupId == g.Id && p.ContactId == Id && g.Deprecated == "0000-00-00 00:00:00")
+                        select g).Distinct().ToList();
+            }
+        }
     }
 }

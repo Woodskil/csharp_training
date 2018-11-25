@@ -55,7 +55,7 @@ namespace WebAddressbookTests
                 File.ReadAllText(@"Data Source\groups.json"));
         }
 
-        [Test, TestCaseSource("GroupDataFromJsonFile")]
+        [Test, TestCaseSource("RandomGroupDataProvider")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = GroupData.GetAll();

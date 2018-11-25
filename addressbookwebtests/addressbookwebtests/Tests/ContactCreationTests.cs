@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -54,15 +54,14 @@ namespace WebAddressbookTests
                 File.ReadAllText(@"Data Source\contacts.json"));
         }
 
-        [Test, TestCaseSource("ContactDataFromJsonFile")]
+        [Test, TestCaseSource("RandomContactDataProvider")]
         public void ContactCreationTest(ContactData contact)
         {
-            List<ContactData> oldContacts = applicationManager.PubContactHelper.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             applicationManager.PubContactHelper.Create(contact);
-            applicationManager.PubContactHelper.Wait(100);
 
-            List<ContactData> newContacts = applicationManager.PubContactHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             oldContacts.Add(contact);
             oldContacts.Sort();
