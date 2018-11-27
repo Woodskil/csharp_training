@@ -30,5 +30,10 @@ namespace WebAddressbookTests
             }
             return builder.ToString();
         }
+
+        public static int GenerateRandomInt(int maxInt)
+        {
+            return rnd.Next(maxInt);
+        }
     }
 }

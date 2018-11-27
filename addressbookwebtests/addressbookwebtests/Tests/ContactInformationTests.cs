@@ -29,7 +29,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactInformationTestFromViewAndEdit()
         {
-            int NumberOfContactWithInformation = 0;
+            int NumberOfContactWithInformation = 5;
 
             applicationManager.PubContactHelper.ChackOrCreateContact(NumberOfContactWithInformation);
 

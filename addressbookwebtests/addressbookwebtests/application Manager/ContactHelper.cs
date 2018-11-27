@@ -52,9 +52,25 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.PubNavigationHelper.GoToContactsPage();
+            OpenGroupFilter(group.Id);
+            SelectContact(contact.Id);
+            CommitRemoveFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
         public void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public void OpenGroupFilter(string group_id)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByValue(group_id);
         }
 
         public void SelectGroupToAdd(string name)
@@ -67,10 +83,26 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("add")).Click();
         }
 
+        public void CommitRemoveFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
         public string GetContactInformationFromViewForm(int index)
         {
             manager.PubNavigationHelper.GoToViewContactsPage(index);
-            return driver.FindElement(By.Id("content")).Text;
+            string info = driver.FindElement(By.Id("content")).Text;
+
+            if (info.IndexOf("Member of: ") >= 0)
+            {
+                info = info.Substring(0, info.IndexOf("Member of: "));
+                while (info.Substring(info.Length - 2) == "\r\n")
+                {
+                    info = info.Substring(0, info.Length - 2);
+                }
+            }
+
+            return info;
         }
 
         public ContactHelper Create(ContactData contact)

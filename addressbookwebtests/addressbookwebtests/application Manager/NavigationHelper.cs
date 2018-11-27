@@ -47,6 +47,7 @@ namespace WebAddressbookTests
                 return this;
             }
             driver.FindElement(By.LinkText("home")).Click();
+            manager.PubContactHelper.ClearGroupFilter();
             return this;
         }
 

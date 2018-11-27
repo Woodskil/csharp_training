@@ -104,7 +104,7 @@
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\ContactSearchTests.cs" />
-    <Compile Include="Tests\AddingContactToGroupTests.cs" />
+    <Compile Include="Tests\RelationContactAndGroupTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
