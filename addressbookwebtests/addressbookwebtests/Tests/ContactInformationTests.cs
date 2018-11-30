@@ -29,13 +29,23 @@ namespace WebAddressbookTests
         [Test]
         public void ContactInformationTestFromViewAndEdit()
         {
-            int NumberOfContactWithInformation = 5;
+            int NumberOfContactWithInformation = 0;
 
             applicationManager.PubContactHelper.ChackOrCreateContact(NumberOfContactWithInformation);
 
             ContactData fromEdit = applicationManager.PubContactHelper.GetContactInformationFromEditForm(NumberOfContactWithInformation);
             string stringFromEdit = fromEdit.GetInformationFromViewForm();
+
             string stringFromView = applicationManager.PubContactHelper.GetContactInformationFromViewForm(NumberOfContactWithInformation);
+            if (stringFromView.IndexOf("Member of: ") >= 0)
+            {
+                stringFromView = stringFromView.Substring(0, stringFromView.IndexOf("Member of: "));
+                while (stringFromView.Substring(stringFromView.Length - 2) == "\r\n")
+                {
+                    stringFromView = stringFromView.Substring(0, stringFromView.Length - 2);
+                }
+            }
+
 
             Assert.AreEqual(stringFromEdit, stringFromView);
         }

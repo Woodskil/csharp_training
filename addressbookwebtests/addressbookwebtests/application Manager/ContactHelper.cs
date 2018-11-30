@@ -93,15 +93,6 @@ namespace WebAddressbookTests
             manager.PubNavigationHelper.GoToViewContactsPage(index);
             string info = driver.FindElement(By.Id("content")).Text;
 
-            if (info.IndexOf("Member of: ") >= 0)
-            {
-                info = info.Substring(0, info.IndexOf("Member of: "));
-                while (info.Substring(info.Length - 2) == "\r\n")
-                {
-                    info = info.Substring(0, info.Length - 2);
-                }
-            }
-
             return info;
         }
 
