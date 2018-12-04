@@ -19,6 +19,26 @@ namespace mantis_tests
             baseURL = manager.BaseURL;
         }
 
+        public NavigationHelper OpenHomePage()
+        {
+            if (driver.Url == baseURL + "my_view_page.php")
+            {
+                return this;
+            }
+            driver.Navigate().GoToUrl(baseURL + "my_view_page.php");
+            return this;
+        }
+
+        public NavigationHelper OpenManageProjectPage()
+        {
+            if (driver.Url == baseURL + "manage_proj_page.php")
+            {
+                return this;
+            }
+            driver.Navigate().GoToUrl(baseURL + "manage_proj_page.php");
+            return this;
+        }
+
         public NavigationHelper OpenLoginPage()
         {
             if (driver.Url == baseURL + "login_page.php")

@@ -10,6 +10,13 @@ namespace mantis_tests
     public class TestBase
     {
         public static bool PERFORM_LONG_UI_CHECKS = true;
+        public static AccountData admin = new AccountData
+        {
+            Username = "administrator",
+            Password = "password",
+            Email = "root@localhost"
+        };
+
         protected ApplicationManager applicationManager;
 
         [TestFixtureSetUp]
