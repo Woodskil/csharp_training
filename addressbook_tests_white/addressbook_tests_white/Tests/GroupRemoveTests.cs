@@ -11,15 +11,15 @@ namespace addressbook_tests_white
         [Test]
         public void GroupRemoveTest()
         {
-            int IndexOfRemovedGroup = 1;
+            int indexOfRemovedGroup = 1;
             List<GroupData> oldGroups = app.Groups.GetGroupList();
-            while (oldGroups.Count <= IndexOfRemovedGroup)
+            while (oldGroups.Count <= indexOfRemovedGroup)
             {
                 app.Groups.AddGroup(new GroupData("NewTestGroup"));
                 oldGroups = app.Groups.GetGroupList();
             }
 
-            GroupData TobeRemoved = oldGroups[IndexOfRemovedGroup];
+            GroupData TobeRemoved = oldGroups[indexOfRemovedGroup];
 
             app.Groups.RemoveFroup(TobeRemoved);
 

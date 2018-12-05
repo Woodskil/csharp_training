@@ -49,10 +49,9 @@ namespace addressbook_tests_white
         {
             Window dialogue = OpenEditGroupDialog();
             dialogue.Get<Button>("uxNewAddressButton").Click();
-            TextBox textBox = (TextBox)dialogue.Get(SearchCriteria.ByControlType(ControlType.Edit));
-            textBox.Enter(newGroup.Name);
+            TextBox textBox = (TextBox) dialogue.Get(SearchCriteria.ByControlType(ControlType.Edit));
+            textBox.SetValue(newGroup.Name);
             Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
-
             CloseEditGroupDialog(dialogue);
         }
 
@@ -66,6 +65,7 @@ namespace addressbook_tests_white
                 if (item.Text == newGroup.Name)
                 {
                     item.Click();
+                    break;
                 }
             }
             dialogue.Get<Button>("uxDeleteAddressButton").Click();

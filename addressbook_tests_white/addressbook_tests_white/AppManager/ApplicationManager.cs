@@ -12,7 +12,10 @@ namespace addressbook_tests_white
     public class ApplicationManager
     {
         private GroupHelper groupHelper;
+        private ContactHelper contactHelper;
+
         public GroupHelper Groups { get { return groupHelper; } }
+        public ContactHelper Contacts { get { return contactHelper; } }
 
         public Window MainWindow { get; private set; }
 
@@ -24,7 +27,8 @@ namespace addressbook_tests_white
             Application app = Application.Launch(BaseProgramExePath);
             MainWindow = app.GetWindow(WINTITLE);
 
-            groupHelper = new GroupHelper(this); 
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
         }
 
         public void Stop()
