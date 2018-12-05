@@ -29,7 +29,7 @@ namespace addressbook_tests_white
 
         public void Stop()
         {
-            MainWindow.Get<Button>("").Click();
+            MainWindow.Get<Button>("uxExitAddressButton").Click();
         }
     }
 }

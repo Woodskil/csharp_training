@@ -13,10 +13,7 @@ namespace addressbook_tests_white
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            GroupData newGroup = new GroupData()
-            {
-                Name = "white_test_group_name"
-            };
+            GroupData newGroup = new GroupData("whitetestgroupname");
 
             app.Groups.AddGroup(newGroup);
 

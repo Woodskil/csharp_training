@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestStack.White;
+using TestStack.White.InputDevices;
+using TestStack.White.WindowsAPI;
+using TestStack.White.UIItems;
+using TestStack.White.UIItems.Finders;
+using TestStack.White.UIItems.TreeItems;
+using TestStack.White.UIItems.WindowItems;
+using System.Windows.Automation;
 
 namespace addressbook_tests_white
 {
@@ -12,42 +20,58 @@ namespace addressbook_tests_white
 
         public GroupHelper(ApplicationManager manager) : base(manager) { }
 
-        public void OpenEditGroupDialog()
+        public Window OpenEditGroupDialog()
         {
-            aux.ControlClick(WINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d512");
-            aux.WinWait(GROUPWINTITLE);
+            manager.MainWindow.Get<Button>("groupButton").Click();
+            return manager.MainWindow.ModalWindow(GROUPWINTITLE);
         }
 
-        public void CloseEditGroupDialog()
+        public void CloseEditGroupDialog(Window dialogue)
         {
-            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d54");
-            aux.WinWait(WINTITLE);
+            dialogue.Get<Button>("uxCloseAddressButton").Click();
         }
 
         public List<GroupData> GetGroupList()
         {
             List<GroupData> list = new List<GroupData>();
-            OpenEditGroupDialog();
-            string count = aux.ControlTreeView(
-                GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51",
-                "GetItemCount", "#0", "");
-            for (int i = 0; i < int.Parse(count); i++)
+            Window dialogue = OpenEditGroupDialog();
+            Tree tree = dialogue.Get<Tree>("uxAddressTreeView");
+            TreeNode root = tree.Nodes[0];
+            foreach (TreeNode item in root.Nodes)
             {
-                list.Add(new GroupData(aux.ControlTreeView(
-                    GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51",
-                    "GetText", "#0|#" + i, "")));
+                list.Add(new GroupData(item.Text));
             }
-            CloseEditGroupDialog();
+            CloseEditGroupDialog(dialogue);
             return list;
         }
 
         public void AddGroup(GroupData newGroup)
         {
-            OpenEditGroupDialog();
-            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53");
-            aux.Send(newGroup.Name);
-            aux.Send("{ENTER}");
-            CloseEditGroupDialog();
+            Window dialogue = OpenEditGroupDialog();
+            dialogue.Get<Button>("uxNewAddressButton").Click();
+            TextBox textBox = (TextBox)dialogue.Get(SearchCriteria.ByControlType(ControlType.Edit));
+            textBox.Enter(newGroup.Name);
+            Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
+
+            CloseEditGroupDialog(dialogue);
+        }
+
+        public void RemoveFroup(GroupData newGroup)
+        {
+            Window dialogue = OpenEditGroupDialog();
+            Tree tree = dialogue.Get<Tree>("uxAddressTreeView");
+            TreeNode root = tree.Nodes[0];
+            foreach (TreeNode item in root.Nodes)
+            {
+                if (item.Text == newGroup.Name)
+                {
+                    item.Click();
+                }
+            }
+            dialogue.Get<Button>("uxDeleteAddressButton").Click();
+            Window delete = dialogue.ModalWindow("Delete group");
+            delete.Get<Button>("uxOKAddressButton").Click();
+            CloseEditGroupDialog(dialogue);
         }
     }
 }
