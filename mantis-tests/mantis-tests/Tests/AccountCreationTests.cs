@@ -22,14 +22,22 @@ namespace mantis_tests
         [Test]
         public void AccountRegistrationTest()
         {
-            string randomUsername = "testuser" + GenerateRandomInt(10000);
-            
+            //string randomUsername = "testuser" + GenerateRandomInt(1000);
+
+            List<AccountData> accounts = applicationManager.Admin.GetAllAccounts();
+
             AccountData account = new AccountData()
             {
-                Username = randomUsername,
+                Username = "testuser",
                 Password = "password",
-                Email = randomUsername + "@localhost.localdomain"
+                Email = "testuser@localhost.localdomain"
             };
+
+            AccountData existingAccount = accounts.Find(x => x.Username == account.Username);
+            if (existingAccount != null)
+            {
+                applicationManager.Admin.DeleteAccount(existingAccount);
+            }
 
             applicationManager.James.Delete(account);
             applicationManager.James.Add(account);

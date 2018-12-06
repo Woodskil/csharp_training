@@ -22,6 +22,7 @@ namespace mantis_tests
         protected MailHelper mailHelper;
         protected LoginHelper loginHelper;
         protected ProjectManagementHelper projectManagementHelper;
+        protected AdminHelper adminHelper;
 
         private static ThreadLocal<ApplicationManager> applicationManager = new ThreadLocal<ApplicationManager>();
 
@@ -35,6 +36,7 @@ namespace mantis_tests
         public MailHelper Mail { get { return mailHelper; } }
         public LoginHelper Login { get { return loginHelper; } }
         public ProjectManagementHelper ProjectManagement { get { return projectManagementHelper; } }
+        public AdminHelper Admin { get { return adminHelper; } }
 
         private ApplicationManager()
         {
@@ -48,6 +50,7 @@ namespace mantis_tests
             mailHelper = new MailHelper(this);
             loginHelper = new LoginHelper(this);
             projectManagementHelper = new ProjectManagementHelper(this);
+            adminHelper = new AdminHelper(this, baseURL);
         }
 
         public static ApplicationManager GetInstance()

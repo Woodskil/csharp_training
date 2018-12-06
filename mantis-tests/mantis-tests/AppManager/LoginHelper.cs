@@ -12,11 +12,8 @@ namespace mantis_tests
 {
     public class LoginHelper : HelperBase
     {
-        public LoginHelper(ApplicationManager manager) : base(manager)
-        {
-            this.manager = manager;
-            driver = manager.Driver;
-        }   
+
+        public LoginHelper(ApplicationManager manager) : base(manager) { }
 
         public void Login(AccountData account)
         {
@@ -24,10 +21,11 @@ namespace mantis_tests
             {
                 return;
             }
+            driver.Url = baseUrl + "login_page.php";
             Type(By.Id("username"), account.Username);
-            driver.FindElement(By.XPath("//input[@value='Войти']")).Click();
+            driver.FindElement(By.CssSelector("input[type='submit']")).Click();
             Type(By.Id("password"), account.Password);
-            driver.FindElement(By.XPath("//input[@value='Войти']")).Click();
+            driver.FindElement(By.CssSelector("input[type='submit']")).Click();
         }
 
         public bool IsLoggedIn()
