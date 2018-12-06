@@ -11,7 +11,9 @@ namespace mantis_tests.Tests
         [Test]
         public void CreateNewProjectTest()
         {
-            List<ProjectData> oldProjects = applicationManager.ProjectManagement.GetProjectList();
+            //List<ProjectData> oldProjects = applicationManager.ProjectManagement.GetProjectList();
+            List<ProjectData> oldProjects = applicationManager.API.GetAllProjects(admin);
+
             ProjectData project = new ProjectData()
             {
                 Name = "new_test_project" + GenerateRandomInt(50),
@@ -23,8 +25,9 @@ namespace mantis_tests.Tests
             bool result = applicationManager.ProjectManagement.AddNewProject(project);
             Assert.AreEqual(expectedResult, result);
 
-            List<ProjectData> newprojects = applicationManager.ProjectManagement.GetProjectList();
-            oldProjects.Add(project);
+            //List<ProjectData> newprojects = applicationManager.ProjectManagement.GetProjectList();
+            List<ProjectData> newprojects = applicationManager.API.GetAllProjects(admin);
+            if (result == true) { oldProjects.Add(project); }
             oldProjects.Sort();
             newprojects.Sort();
             Assert.AreEqual(oldProjects, newprojects);
@@ -35,13 +38,21 @@ namespace mantis_tests.Tests
         {
             int indexOfRemoveProject = 0;
 
-            List<ProjectData> oldProjects = applicationManager.ProjectManagement.GetProjectList();
+            //List<ProjectData> oldProjects = applicationManager.ProjectManagement.GetProjectList();
+            List<ProjectData> oldProjects = applicationManager.API.GetAllProjects(admin);
+            while (oldProjects.Count <= indexOfRemoveProject)
+            {
+                applicationManager.API.CreateNewProject(admin, new ProjectData("API_test_project_" + GenerateRandomInt(1000000), "API_description"));
+                oldProjects = applicationManager.API.GetAllProjects(admin);
+            }
+
             ProjectData project = oldProjects[indexOfRemoveProject];
 
             bool result = applicationManager.ProjectManagement.RemoveProject(project);
             Assert.AreEqual(true, result);
 
-            List<ProjectData> newprojects = applicationManager.ProjectManagement.GetProjectList();
+            //List<ProjectData> newprojects = applicationManager.ProjectManagement.GetProjectList();
+            List<ProjectData> newprojects = applicationManager.API.GetAllProjects(admin);
             oldProjects.Remove(project);
             oldProjects.Sort();
             newprojects.Sort();

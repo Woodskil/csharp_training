@@ -37,6 +37,7 @@ namespace mantis_tests
             Type(By.Id("project-name"), project.Name);
             Type(By.Id("project-description"), project.Description);
             driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+            Wait(100);
             return !IsElementPresent(By.XPath("//div[@class='alert alert-danger']"));
         }
 

@@ -23,6 +23,7 @@ namespace mantis_tests
         protected LoginHelper loginHelper;
         protected ProjectManagementHelper projectManagementHelper;
         protected AdminHelper adminHelper;
+        protected APIHelper aPIHelper;
 
         private static ThreadLocal<ApplicationManager> applicationManager = new ThreadLocal<ApplicationManager>();
 
@@ -37,6 +38,7 @@ namespace mantis_tests
         public LoginHelper Login { get { return loginHelper; } }
         public ProjectManagementHelper ProjectManagement { get { return projectManagementHelper; } }
         public AdminHelper Admin { get { return adminHelper; } }
+        public APIHelper API { get { return aPIHelper; } }
 
         private ApplicationManager()
         {
@@ -51,6 +53,7 @@ namespace mantis_tests
             loginHelper = new LoginHelper(this);
             projectManagementHelper = new ProjectManagementHelper(this);
             adminHelper = new AdminHelper(this, baseURL);
+            aPIHelper = new APIHelper(this);
         }
 
         public static ApplicationManager GetInstance()
